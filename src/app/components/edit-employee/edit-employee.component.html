@@ -1,0 +1,105 @@
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<mat-dialog-actions align="end">
+    <button class="w-10 btn btn-lg btn-primary" mat-button mat-dialog-close>
+        <img src="\assets\images\deleteX.svg">
+    </button>
+</mat-dialog-actions>
+
+<!-- <div class="d-flex justify-content-center align-items-center"> -->
+<mat-dialog-content class="mat-typography">
+    <form class="my" [formGroup]="employeeForm" (ngSubmit)="onSubmit()" style="max-width: 1200px;">
+
+        <div class="form-floating mb-3">
+            <label for="firstName">First Name</label>
+            <input class="form-control" type="text" id="firstName" formControlName="firstName" placeholder="First Name">
+            <div *ngIf="employeeForm.get('firstName')?.invalid && (employeeForm.get('firstName')?.dirty || employeeForm.get('firstName')?.touched)"
+                class="text-danger">
+                <div *ngIf="employeeForm.get('firstName')?.errors?.['required']">First name is required.</div>
+                <div *ngIf="employeeForm.get('firstName')?.errors?.['minlength']">First name must be at least 2
+                    characters.</div>
+            </div>
+        </div>
+
+        <div class="form-floating mb-3">
+            <label for="lastName">Last Name</label>
+            <input class="form-control" type="text" id="lastName" formControlName="lastName" placeholder="Last Name">
+            <div *ngIf="employeeForm.get('lastName')?.invalid && (employeeForm.get('lastName')?.dirty || employeeForm.get('lastName')?.touched)"
+                class="text-danger">
+                <div *ngIf="employeeForm.get('lastName')?.errors?.['required']">Last name is required.</div>
+                <div *ngIf="employeeForm.get('lastName')?.errors?.['minlength']">Last name must be at least 2
+                    characters.</div>
+            </div>
+        </div>
+
+        <div class="form-floating mb-3">
+            <label for="startDate">Start Date</label>
+            <input class="form-control"  type="date" id="startDate"
+                formControlName="startDate" [value]="startDate | date: 'dd/MM/yyyy h:mm a'" >
+            <div *ngIf="employeeForm.get('startDate')?.invalid && (employeeForm.get('startDate')?.dirty || employeeForm.get('startDate')?.touched)"
+                class="text-danger">
+                <div *ngIf="employeeForm.get('startDate')?.errors?.['required']">Start date is required.</div>
+            </div>
+        </div>
+
+        <div class="form-floating mb-3">
+            <label for="status">Status</label>
+            <select class="form-select form-control" id="status" formControlName="status">
+                <option value="" disabled selected>Status</option>
+                <option [ngValue]="true">Active</option>
+                <option [ngValue]="false">Inactive</option>
+            </select>
+        </div>
+
+        <div class="form-floating mb-3">
+            <label for="birthDate">Birth Date</label>
+            <input class="form-control" type="date" id="birthDate" formControlName="birthDate">
+            <div *ngIf="employeeForm.get('birthDate')?.invalid && (employeeForm.get('birthDate')?.dirty || employeeForm.get('birthDate')?.touched)"
+                class="text-danger">
+                <div *ngIf="employeeForm.get('birthDate')?.errors?.['required']">Birth date is required.</div>
+            </div>
+        </div>
+
+        <div class="form-floating mb-3">
+            <label for="gender">Gender</label>
+            <select class="form-select form-control" id="gender" formControlName="gender" placeholder="Gender">
+                <option value="" disabled selected>Gender</option>
+                <option value="0">Male</option>
+                <option value="1">Female</option>
+            </select>
+        </div>
+        <div>
+            <label for="role">Roles:</label>
+
+            <div formArrayName="rolesForEmployees" *ngFor="let role of rolesForEmployees.controls; let i = index"
+                class="role-group" class="d-flex align-items-center">
+
+                <div [formGroupName]="i">
+                    <select formControlName="roleDId" class="form-select form-control">
+                        <option *ngFor="let option of rolesList" [value]="option.id">{{ option.roleName }}</option>
+                    </select>
+                    <input formControlName="roleName" type="hidden" readonly>
+                    <label for="entry date">entry date:</label>
+
+                    <input type="date" class="form-control" formControlName="entryDate">
+                    <label for="isManagerial">is managerial:</label>
+
+                    <select formControlName="isManagerial" class="form-select form-control">
+                        <option [ngValue]="false">false</option>
+                        <option [ngValue]="true">true</option>
+                    </select>
+                    <button type="button" (click)="removeRole(i)">
+                        <img src="/assets/images/deleteX.svg" />
+                    </button>
+                </div>
+
+            </div>
+        </div>
+
+        <button type="button" class="btn btn-primary" (click)="addRole()">Add Role</button>
+        <div *ngIf="employeeForm.hasError('invalidEntryDate')">InvalidEntryDate.</div>
+        <div *ngIf="rolesForEmployees.hasError('roleAlreadyExists')">Role already exists in the list.</div>
+
+        <button type="submit" class="w-100 btn btn-lg btn-primary" [disabled]="!employeeForm.valid">Submit</button>
+    </form>
+</mat-dialog-content>

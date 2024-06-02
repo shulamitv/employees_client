@@ -1,0 +1,40 @@
+.header-container {
+    background-color: #28679b; 
+    color: white;
+    padding: 20px;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000; 
+    margin-bottom: 100px;
+  }
+  
+  .custom-btn {
+    margin-right: 10px; 
+    border-color: white;
+    color: white; 
+    transition: font-size 0.2s ease; 
+
+  }
+  
+  .custom-btn img {
+    margin-left: 5px;
+  }
+  
+  .custom-btn {
+    display: flex;
+    align-items: center;
+  }
+
+  .custom-btn {
+    background-color: transparent; 
+    border: none; 
+    color: black;
+  }
+
+  .custom-btn:hover {
+    color: rgb(30, 29, 29); 
+  }
+
+
+  
